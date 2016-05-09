@@ -455,18 +455,21 @@
             }
             else
             {
-                if([[NSFileManager defaultManager] subpathsOfDirectoryAtPath:fullFilePath error:nil].count == 0)
-                {
-                    NSString *tempName = [fullFilePath stringByAppendingPathComponent:@".DS_Store"];
-                    [@"" writeToFile:tempName atomically:YES encoding:NSUTF8StringEncoding error:nil];
-                    [zipArchive writeFileAtPath:tempName withFileName:[fileName stringByAppendingPathComponent:@".DS_Store"] withPassword:password];
-                    [[NSFileManager defaultManager] removeItemAtPath:tempName error:nil];
-                }
-            }
+				/*
+				 if([[NSFileManager defaultManager] subpathsOfDirectoryAtPath:fullFilePath error:nil].count == 0)
+				 {
+				 NSString *tempName = [fullFilePath stringByAppendingPathComponent:@".DS_Store"];
+				 [@"" writeToFile:tempName atomically:YES encoding:NSUTF8StringEncoding error:nil];
+				 [zipArchive writeFileAtPath:tempName withFileName:[fileName stringByAppendingPathComponent:@".DS_Store"] withPassword:password];
+				 [[NSFileManager defaultManager] removeItemAtPath:tempName error:nil];
+				 }*/
+				
+				[zipArchive writeFolderAtPath:fullFilePath withFolderName:fileName withPassword:password];
+			}
         }
         success = [zipArchive close];
     }
-    
+	
 #if !__has_feature(objc_arc)
     [fileManager release];
     [zipArchive release];
